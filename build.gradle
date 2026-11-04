@@ -1,0 +1,106 @@
+plugins {
+    id 'fabric-loom' version '1.17-SNAPSHOT'
+    id 'maven-publish'
+    id 'idea'   // для лучшей поддержки IntelliJ IDEA
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+repositories {
+    // Add repositories to retrieve artifacts from in here.
+    // You should only use this when depending on other mods.
+}
+
+loom {
+    splitEnvironmentSourceSets()
+
+    mods {
+        "diamondshield" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+
+    // Конфигурации запуска для IntelliJ IDEA / VS Code
+    runs {
+        client {
+            client()
+            setConfigName("Minecraft Client")
+            ideConfigGenerated(true)
+            runDir("run")
+        }
+        server {
+            server()
+            setConfigName("Minecraft Server")
+            ideConfigGenerated(true)
+            runDir("run")
+        }
+        datagen {
+            inherit client
+            name "Data Generation"
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
+            vmArg "-Dfabric-api.datagen.modid=diamondshield"
+            runDir "build/datagen"
+        }
+    }
+}
+
+dependencies {
+    // To change the versions see the gradle.properties file
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 25
+    it.options.encoding = "UTF-8"
+}
+
+java {
+    withSourcesJar()
+    sourceCompatibility = 25
+    targetCompatibility = 25
+}
+
+// Улучшает поддержку IntelliJ IDEA
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${project.base.archivesName.get()}" }
+    }
+}
+
+publishing {
+    publications {
+        create("mavenJava", MavenPublication) {
+            artifactId = project.archives_base_name
+            from components.java
+        }
+    }
+    repositories {
+        // Add repositories to publish to here.
+    }
+}

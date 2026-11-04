@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "diamondshield",
+  "version": "${version}",
+  "name": "MineCraft-mod-ShieldUpdate-I9-23V-Rabotyagi",
+  "description": "Алмазный щит с повышенной прочностью (850). Железный щит с алмазной сердцевиной.",
+  "authors": ["Фишман Д.Р.", "Бурханов А.А.", "Торохов М.А.", "Rabotyagi"],
+  "contact": {},
+  "license": "CC0-1.0",
+  "icon": "assets/diamondshield/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "diamondshield.DiamondShieldMod"
+    ],
+    "client": [
+      "diamondshield.client.DiamondShieldClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~1.21",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}
