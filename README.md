@@ -1,8 +1,7 @@
 # MineCraft-mod-ShieldUpdate-I9-23V-Rabotyagi
 
-**Алмазный щит** для Minecraft 1.21 (Fabric)
-
-**Java / JDK: 25**
+*Алмазный щит* для Minecraft 1.21 (Fabric)
+*Java / JDK: 25*
 
 Название проекта: Shield update
 

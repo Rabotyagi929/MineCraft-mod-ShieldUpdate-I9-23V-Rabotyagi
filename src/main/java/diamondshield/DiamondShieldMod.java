@@ -17,7 +17,6 @@ public class DiamondShieldMod implements ModInitializer {
     public void onInitialize() {
         ModItems.initialize();
 
-        // Принудительно снимаем прочность при блокировании
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
             if (entity instanceof PlayerEntity player && player.isUsingItem()) {
                 ItemStack active = player.getActiveItem();
